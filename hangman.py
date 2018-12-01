@@ -46,10 +46,15 @@ def instructions():
     print("Can you figure out who your opponent is?")
     print("Input a letter and fill in the blanks!")
     print("If you lose, I'll throw you into a volcano...!")
-    print( "-" * 50)
+    # print( "-" * 50)
 
 def gameStart():
-    splitWord = list(chosenWord)
+    game = True
+    blanks = []
+    guessedLetters = []
+    chosenWord = words[randomNumber]
+    splitWord = list(chosenWord.lower())
+    print( "-" * 50)
     print("HERE'S YOUR NEXT CHALLENGER!")
     print()
     makeBlanks()
@@ -68,64 +73,63 @@ def makeBlanks():
 
 
 def gameOver():
-    userContinue = input("Would you like to continue? Y/n")    
-    if userContinue == "Y": 
+    userContinue = input("Would you like to continue? Y/n ")    
+    if userContinue.upper() == "Y": 
         guessesLeft = 10
         gameStart()
     else: 
         print("THANKS FOR PLAYING!")
         print("-" * 50)
 
-def win():
+def win(wins):
     wins += 1
-    print("YOU WIN"!)
+    print("YOU WIN!")
     gameOver()
 
-def lose():
-    lose += 1
+def lose(losses):
+    losses += 1
     print("YOU LOSE!")
     gameOver()
 
 def showResults():
     print('-' * 50)
+    print("Wins:", wins, "||","Losses:", losses)
     print("HERE'S YOUR CURRENT CHALLENGER!")
     print(blanks)
-    print("Guesses Left:", guessesLeft)
     print()
+    print("Guesses Left:", guessesLeft)
     print("Guessed Letters:", guessedLetters)
     print()
-
-# def letterCheck(letter):
-#     for z in alphabet:
-#         if letter != z
-#             print("I SAID PICK A LETTER YOU IMBECILE!")
 
 
 def guessCheck():
     if "_" not in blanks:
- 
-    if guessesLeft > 0:
-        currentLetter = input("Please input a letter (ONE ONLY!) ")
-        if len(currentLetter) > 1:
-            print("I SAID ONE LETTER YOU FOOL!")
-            guessCheck()
-        else:  
-            if currentLetter in splitWord:
-                rightGuess(guessesLeft, currentLetter)
-                showResults()
-                guessCheck()
-
-            else:
-                wrongGuess(guessesLeft, currentLetter)
-                showResults()
-                guessCheck()
+        win(wins)
     else:
-        gameEnd()
-        gameOver()
+        if guessesLeft > 0:
+            currentLetter = input("Please input a letter (ONE ONLY!) ")
+            if len(currentLetter) > 1:
+                print("I SAID ONE LETTER YOU FOOL!")
+                guessCheck()
+            else:  
+                if currentLetter in splitWord:
+                    rightGuess(guessesLeft, currentLetter)
+                    showResults()
+                    guessCheck()
+
+                else:
+                    wrongGuess(guessesLeft, currentLetter)
+                    showResults()
+                    guessCheck()
+        else:
+            gameEnd()
+            gameOver()
 
 
 def rightGuess(guessesLeft, currentLetter):
+    print()
     print("YOU ARE LUCKY!")
+    print()
     guessesLeft -= 1
     for index, letter in enumerate(splitWord):
         if splitWord[index] == currentLetter:
@@ -134,7 +138,9 @@ def rightGuess(guessesLeft, currentLetter):
     return guessesLeft
 
 def wrongGuess(guessesLeft, currentLetter):
+    print()
     print("YOU ARE WRONG YOU FOOL!")
+    print()
     guessesLeft -= 1
     guessedLetters.append(currentLetter)
     return guessesLeft
