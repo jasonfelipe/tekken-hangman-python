@@ -14,13 +14,14 @@ import random
 alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", 'm', 'n', 'o', "p", \
         "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 words = ["Kazuya", "Jin", "Heihachi", "Nina", "King", "Yoshimitsu", "Anna", \
-        "Xiaoyu", "Kuma", "Jack", 'Lei', "Law", "Paul", "Steve", "Ogre", "Lee", "Lars"]
+        "Xiaoyu", "Kuma", "Jack", 'Lei', "Law", "Paul", "Steve", "Ogre", "Lee", "Lars", \
+        "Julia", "Raven", ]
 game = False
 blanks = []
 guessedLetters = []
-randomNumber = random.randint(0,16)
+randomNumber = random.randint(0,17)
 chosenWord = words[randomNumber]
-splitWord = list(chosenWord )
+splitWord = list(chosenWord.lower())
 guessesLeft = 10
 wins = 0
 losses = 0
@@ -69,6 +70,7 @@ def gameOver():
         gameStart()
 
 def showResults():
+    print('-' * 50)
     print("HERE'S YOUR CURRENT CHALLENGER!")
     print(blanks)
     print("Guesses Left:", guessesLeft)
@@ -84,53 +86,43 @@ def showResults():
 
 def guessCheck():
     if guessesLeft > 0:
-        guessedLetter = input("Please input a letter (ONE ONLY!) ")
-        if len(guessedLetter) > 1:
+        currentLetter = input("Please input a letter (ONE ONLY!) ")
+        if len(currentLetter) > 1:
             print("I SAID ONE LETTER YOU FOOL!")
+            guessCheck()
         else:  
-            if guessedLetter in splitWord:
-                print("Correct!!")
+            if currentLetter in splitWord:
+                rightGuess(guessesLeft, currentLetter)
+                showResults()
+                guessCheck()
 
             else:
-                print("Incorrrect")
+                wrongGuess(guessesLeft, currentLetter)
+                showResults()
+                guessCheck()
     else:
         gameEnd()
         gameOver()
 
-def rightGuess(letter):
-    for index, letter in enumerate splitWord
 
+def rightGuess(guessesLeft, currentLetter):
+    if "_" not in blanks:
+        print("CONGRATS YOU WON!")
+        showResults()
+    else:    
+        print("YOU ARE LUCKY!")
+        guessesLeft -= 1
+        for index, letter in enumerate(splitWord):
+            if splitWord[index] == currentLetter:
+                blanks[index] = currentLetter
+        guessedLetters.append(currentLetter)
+        return guessesLeft
 
-
-# def guess():
-#     game = True
-#     if game:
-#         if guessesLeft > 0:
-#             guessedLetter = input("Please input a letter (ONE ONLY!) ")
-#             if len(guessedLetter) > 1:
-#                 print("I SAID ONE LETTER YOU FOOL!")
-#             else:  
-#                 for index, letter in enumerate(chosenWord):
-#                     # print('guessed letter is:', guessedLetter)
-#                     print('this is the index and letter', index, letter)
-                    
-#                     if guessedLetter == letter:
-#                         print('it\'s correct')
-#                         print(blanks[index])
-#                         blanks[index] = guessedLetter
-#                         # break
-#                         guessedLetters.append(guessedLetter)
-#                         showResults()
-#                     else:
-#                         print('it\'s not right')
-#                         # break
-#                         guessedLetters.append(guessedLetter)
-#                         showResults()
-#         else:    
-#             print("YOU LOSE! SAY GOOD BYE!")
-#             gameEnd()
-#             gameOver()   
-
+def wrongGuess(guessesLeft, currentLetter):
+    print("YOU ARE WRONG YOU FOOL!")
+    guessesLeft -= 1
+    guessedLetters.append(currentLetter)
+    return guessesLeft
 
 def run():
     instructions()
