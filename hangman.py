@@ -10,16 +10,22 @@
 # if all letters are guessed the game ends, and then it resets once the user presses a key again.
 # if guesses get to 0, word is revealed, game is over, then it resets once the user presses a key again.
 
+
+# TO DO: 
+# FIX guessesLeft
+# Show word on game over
+# test if continue and next round works
+
 import random
 alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", 'm', 'n', 'o', "p", \
         "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 words = ["Kazuya", "Jin", "Heihachi", "Nina", "King", "Yoshimitsu", "Anna", \
         "Xiaoyu", "Kuma", "Jack", 'Lei', "Law", "Paul", "Steve", "Ogre", "Lee", "Lars", \
-        "Julia", "Raven", ]
+        "Julia", "Raven", "Miguel"]
 game = False
 blanks = []
 guessedLetters = []
-randomNumber = random.randint(0,17)
+randomNumber = random.randint(0,19)
 chosenWord = words[randomNumber]
 splitWord = list(chosenWord.lower())
 guessesLeft = 10
@@ -35,7 +41,7 @@ def instructions():
     print('  |    |\  ___/|    <|    <\  ___/|   |  \\')
     print('  |____| \___  >__|_ \__|_ \\\___  >___|  /')
     print('             \/     \/    \/    \/     \/ ')
-    
+    print()    
     print("Welcome to the King of Iron Fist Tournament!")
     print("Can you figure out who your opponent is?")
     print("Input a letter and fill in the blanks!")
@@ -62,12 +68,23 @@ def makeBlanks():
 
 
 def gameOver():
-    reset = input("Would you like to try again? Y/n")    
-    if reset == "Y": 
-        run()
-        losses += 1
+    userContinue = input("Would you like to continue? Y/n")    
+    if userContinue == "Y": 
         guessesLeft = 10
         gameStart()
+    else: 
+        print("THANKS FOR PLAYING!")
+        print("-" * 50)
+
+def win():
+    wins += 1
+    print("YOU WIN"!)
+    gameOver()
+
+def lose():
+    lose += 1
+    print("YOU LOSE!")
+    gameOver()
 
 def showResults():
     print('-' * 50)
@@ -85,6 +102,8 @@ def showResults():
 
 
 def guessCheck():
+    if "_" not in blanks:
+ 
     if guessesLeft > 0:
         currentLetter = input("Please input a letter (ONE ONLY!) ")
         if len(currentLetter) > 1:
@@ -106,17 +125,13 @@ def guessCheck():
 
 
 def rightGuess(guessesLeft, currentLetter):
-    if "_" not in blanks:
-        print("CONGRATS YOU WON!")
-        showResults()
-    else:    
-        print("YOU ARE LUCKY!")
-        guessesLeft -= 1
-        for index, letter in enumerate(splitWord):
-            if splitWord[index] == currentLetter:
+    print("YOU ARE LUCKY!")
+    guessesLeft -= 1
+    for index, letter in enumerate(splitWord):
+        if splitWord[index] == currentLetter:
                 blanks[index] = currentLetter
-        guessedLetters.append(currentLetter)
-        return guessesLeft
+    guessedLetters.append(currentLetter)
+    return guessesLeft
 
 def wrongGuess(guessesLeft, currentLetter):
     print("YOU ARE WRONG YOU FOOL!")
