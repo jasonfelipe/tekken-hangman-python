@@ -1,21 +1,3 @@
-# Hangman Psuedo Code
-# Get a random word
-# Fill word with blanks
-# Print blank word to console.
-# Give instructions
-# Take a keyup or keydown event
-# check if event is a letter
-# if letter is correct replace the blank with the letter, print the array and guessed letters
-# if letter is incorrect put the letter in the guessed array, print both guessed letters and array of blanks
-# if all letters are guessed the game ends, and then it resets once the user presses a key again.
-# if guesses get to 0, word is revealed, game is over, then it resets once the user presses a key again.
-
-
-# TO DO: 
-# FIX guessesLeft
-# Show word on game over
-# test if continue and next round works
-
 import random
 alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", 'm', 'n', 'o', "p", \
         "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
