@@ -22,7 +22,6 @@ alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", 'm', 'n'
 words = ["Kazuya", "Jin", "Heihachi", "Nina", "King", "Yoshimitsu", "Anna", \
         "Xiaoyu", "Kuma", "Jack", 'Lei', "Law", "Paul", "Steve", "Ogre", "Lee", "Lars", \
         "Julia", "Raven", "Miguel"]
-game = False
 blanks = []
 guessedLetters = []
 randomNumber = random.randint(0,19)
@@ -49,19 +48,22 @@ def instructions():
     # print( "-" * 50)
 
 def gameStart():
-    game = True
+    global blanks
+    global guessedLetters
+    global chosenWord
+    global splitWord
+    global  randomNumber
+    randomNumber = random.randint(0,19)
     blanks = []
     guessedLetters = []
     chosenWord = words[randomNumber]
     splitWord = list(chosenWord.lower())
     print( "-" * 50)
+    print("Wins:", wins, "||","Losses:", losses)
     print("HERE'S YOUR NEXT CHALLENGER!")
     print()
     makeBlanks()
     guessCheck()
-
-def gameEnd():
-    game = False
 
 def makeBlanks(): 
     # For loop to get index and each item
@@ -75,20 +77,37 @@ def makeBlanks():
 def gameOver():
     userContinue = input("Would you like to continue? Y/n ")    
     if userContinue.upper() == "Y": 
+        global guessesLeft
         guessesLeft = 10
         gameStart()
     else: 
         print("THANKS FOR PLAYING!")
         print("-" * 50)
 
-def win(wins):
+def win():
+    global wins
     wins += 1
+    print()
+    print('YOU PREPARED FOR...')
+    print(chosenWord)
+    print("YOU BEAT", chosenWord)
     print("YOU WIN!")
+    print()
+    print('-' * 50)
+
     gameOver()
 
-def lose(losses):
+def lose():
+    global losses
     losses += 1
+    print()
+    print('YOU HAD NO IDEA WHO YOU OPPONENT WAS...')
+    print("YOUR OPPONENT WAS...")
+    print(chosenWord)
+    print('THEY BEAT YOU UP FOR FREE!')
     print("YOU LOSE!")
+    print()
+    print('-' * 50)
     gameOver()
 
 def showResults():
@@ -104,46 +123,56 @@ def showResults():
 
 def guessCheck():
     if "_" not in blanks:
-        win(wins)
+        win()
     else:
         if guessesLeft > 0:
             currentLetter = input("Please input a letter (ONE ONLY!) ")
-            if len(currentLetter) > 1:
-                print("I SAID ONE LETTER YOU FOOL!")
+            if currentLetter in guessedLetters:
+                print('YOU ALREADY GUESSED THAT! PREDICTABLE!')
+                showResults()
+                print()
                 guessCheck()
-            else:  
-                if currentLetter in splitWord:
-                    rightGuess(guessesLeft, currentLetter)
+            else:
+                if currentLetter not in alphabet:
+                    print('I SAID A LETTER, AS IN SOMETHING IN THE ALPHABET!')
                     showResults()
+                    print()
                     guessCheck()
+                else:    
+                    if len(currentLetter) > 1 and currentLetter not in alphabet:
+                        print("I SAID ONE LETTER YOU FOOL!")
+                        print()
+                        guessCheck()
+                    else:  
+                        if currentLetter in splitWord:
+                            rightGuess(currentLetter)
+                            showResults()
+                            guessCheck()
 
-                else:
-                    wrongGuess(guessesLeft, currentLetter)
-                    showResults()
-                    guessCheck()
+                        else:
+                            wrongGuess(currentLetter)
+                            showResults()
+                            guessCheck()
         else:
-            gameEnd()
-            gameOver()
+            lose()
 
 
-def rightGuess(guessesLeft, currentLetter):
+def rightGuess(currentLetter):
     print()
     print("YOU ARE LUCKY!")
     print()
-    guessesLeft -= 1
     for index, letter in enumerate(splitWord):
         if splitWord[index] == currentLetter:
                 blanks[index] = currentLetter
     guessedLetters.append(currentLetter)
-    return guessesLeft
 
-def wrongGuess(guessesLeft, currentLetter):
+def wrongGuess(currentLetter):
     print()
     print("YOU ARE WRONG YOU FOOL!")
     print()
+    global guessesLeft
     guessesLeft -= 1
     guessedLetters.append(currentLetter)
-    return guessesLeft
 
 def run():
     instructions()
