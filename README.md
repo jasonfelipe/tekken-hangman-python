@@ -9,7 +9,7 @@ After this, in your terminal of choice, navigate
 to the appropriate folder (this game's folder) 
 and input the following: 
 ```
-python hangman.py
+python game.py
 ``` 
 The game should run. Enjoy! 
 
