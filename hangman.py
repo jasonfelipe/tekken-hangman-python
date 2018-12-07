@@ -6,8 +6,7 @@ words = ["Kazuya", "Jin", "Heihachi", "Nina", "King", "Yoshimitsu", "Anna", \
         "Julia", "Raven", "Miguel"]
 blanks = []
 guessedLetters = []
-randomNumber = random.randint(0,19)
-chosenWord = words[randomNumber]
+chosenWord = random.choice(words)
 splitWord = list(chosenWord.lower())
 guessesLeft = 10
 wins = 0
@@ -34,11 +33,9 @@ def gameStart():
     global guessedLetters
     global chosenWord
     global splitWord
-    global  randomNumber
-    randomNumber = random.randint(0,19)
     blanks = []
     guessedLetters = []
-    chosenWord = words[randomNumber]
+    chosenWord = random.choice(words)
     splitWord = list(chosenWord.lower())
     print( "-" * 50)
     print("Wins:", wins, "||","Losses:", losses)
