@@ -80,7 +80,7 @@ def lose():
     global losses
     losses += 1
     print()
-    print('YOU HAD NO IDEA WHO YOU OPPONENT WAS...')
+    print('YOU HAD NO IDEA WHO YOUR OPPONENT WAS...')
     print("YOUR OPPONENT WAS...")
     print(chosenWord)
     print('THEY BEAT YOU UP FOR FREE!')
