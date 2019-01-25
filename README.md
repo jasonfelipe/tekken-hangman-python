@@ -14,9 +14,10 @@ python game.py
 The game should run. Enjoy! 
 
 ## Future Developments
-A time attack mode 
-A boss mode 
-An array that holds previous opponents (so the answer doesn't repeat) 
+A Time Attack Mode
+Boss Fights (An array that holds previous opponents and after a certain amount goes 
+to a boss) 
+
 
 ### My Info 
 Please check my other stuff out! 
