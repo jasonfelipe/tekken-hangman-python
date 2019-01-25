@@ -13,6 +13,11 @@ python game.py
 ``` 
 The game should run. Enjoy! 
 
+## Future Developments
+A time attack mode
+A boss mode
+An array that holds previous opponents (so the answer doesn't repeat)
+
 ### My Info 
 Please check my other stuff out! 
 
