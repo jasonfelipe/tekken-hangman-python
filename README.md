@@ -14,8 +14,8 @@ python game.py
 The game should run. Enjoy! 
 
 ## Future Developments
-A Time Attack Mode
-Boss Fights (An array that holds previous opponents and after a certain amount goes 
+A Time Attack Mode  
+Boss Fights (An array that holds previous opponents and after a certain amount goes  
 to a boss) 
 
 
